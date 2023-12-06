@@ -1,0 +1,86 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+  }
+
+model Colaboradores {
+  IDCOL         Int      @id @default(autoincrement())
+  NOME          String   @db.VarChar(120)
+  EMAIL         String
+  SENHA         String
+  ACESSOSISTEMA Boolean  @default(false, map: "Usuarios_ACESSOSISTEMA_df")
+  CHEFIA        Boolean  @default(false, map: "Usuarios_CHEFIA_df")
+  STATUS        Boolean  @default(true, map: "Usuarios_STATUS_df")
+  //Remover Supervisor, Admissao, PrimAcesso
+  pedido Pedido[]
+  //Ligação de tabelas
+  //colRespostaAvaliado Perguntas_Respostas[] @relation("colRespostaAvaliado")
+
+  @@map("Usuarios")
+}
+
+model Pedido{
+  idPedido Int @id @default(autoincrement())
+  quantidade Int
+  status Boolean @default(true)
+  Colaborador Int
+  idComanda Int
+  dataPedido DateTime @default(now())
+  idItem Int
+  andamento String @default("Solicitado")
+
+  item Cardapio @relation(fields: [idItem], references: [idItem])
+  colaborador Colaboradores @relation(fields: [Colaborador], references: [IDCOL])
+  comanda ComandaMesa @relation(fields: [idComanda], references: [idComanda])
+
+  bonus BonusGarcom[]
+}
+model Cardapio{
+  idItem Int @id @default(autoincrement())
+  categoria Int
+  statusItem Boolean @default(true)
+  nomeItem String
+  preco Float
+  descricao String
+  descricaoStatus String?
+
+  categorias Categoria @relation(fields: [categoria], references: [idCategoria])
+
+  pedido Pedido[]
+}
+model Categoria{
+  idCategoria Int @id @default(autoincrement())
+  descricao String
+
+  cardapio Cardapio[]
+}
+model ComandaMesa{
+  idComanda Int @id @default(autoincrement())
+  idMesa Int
+  status Boolean @default(true)
+  observacoes String
+
+  mesa Mesa @relation(fields: [idMesa], references: [idMesa])
+
+  pedido Pedido[]
+}
+model Mesa{
+  idMesa Int @id @default(autoincrement())
+  numeroMesa Int
+  status Boolean @default(true)
+
+  comanda ComandaMesa[]
+}
+model BonusGarcom{
+  idBonus Int @id @default(autoincrement())
+  diaReferencia DateTime @default(now())
+  porcentagem Float
+  idPedido Int
+  valor Float
+
+  pedido Pedido @relation(fields: [idPedido], references: [idPedido])
+}

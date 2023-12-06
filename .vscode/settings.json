@@ -1,0 +1,12 @@
+{
+    "folder-path-color.folders": [
+        //{ "path": "files", "symbol": "SR", "tooltip": "Source files","color": "blue" },
+        { "path": "prisma", "symbol": "BS", "tooltip": "BASE","color": "green"},
+        { "path": "src/app/bonus-garcom", "symbol": "FF", "tooltip": "Feito","color": "magenta"},
+        { "path": "src/app/cardapio", "symbol": "FF", "tooltip": "Feito","color": "magenta"},
+        { "path": "src/app/categoria", "symbol": "FF", "tooltip": "Feito","color": "magenta"},
+        { "path": "src/app/comanda-mesa", "symbol": "FF", "tooltip": "Feito","color": "magenta"},
+        { "path": "src/app/pedido", "symbol": "FF", "tooltip": "Feito","color": "magenta"},
+        { "path": "src/app/mesa", "symbol": "FF", "tooltip": "Feito","color": "magenta"},
+    ]
+}
